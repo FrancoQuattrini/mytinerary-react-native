@@ -1,13 +1,18 @@
 import React from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
-const CalltoAction = () => {
+const CalltoAction = (props) => {
    return (
       <View style={styles.container}>
          <Text style={styles.title}>
             Now, it is your decision. Just choose your destination!
          </Text>
-         <TouchableOpacity onPress={() => console.log("Aprete")}>
+         <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => {
+               props.navigation.navigate("cities")
+            }}
+         >
             <View style={styles.button}>
                <Text style={styles.textButton}>CLICK HERE</Text>
             </View>

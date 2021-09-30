@@ -1,14 +1,14 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 
-const Itineraries = () => {
+const Contact = () => {
    return (
       <View>
-         <Text>SOY ITINERARIES</Text>
+         <Text>SOY CONTACT</Text>
       </View>
    )
 }
 
-export default Itineraries
+export default Contact
 
 const styles = StyleSheet.create({})

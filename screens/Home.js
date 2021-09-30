@@ -4,11 +4,11 @@ import Hero from "../components/Hero"
 import Carousel from "../components/Carousel"
 import CalltoAction from "../components/CalltoAction"
 
-const Home = () => {
+const Home = (props) => {
    return (
       <ScrollView>
          <Hero />
-         <CalltoAction />
+         <CalltoAction navigation={props.navigation} />
          <Carousel />
       </ScrollView>
    )

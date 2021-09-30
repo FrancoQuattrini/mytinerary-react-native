@@ -1,8 +1,5 @@
 import React from "react"
-import { StatusBar, View } from "react-native"
-import Home from "./screens/Home"
-import Cities from "./screens/Cities"
-import SignUp from "./screens/SignUp"
+import { StatusBar } from "react-native"
 import {
    useFonts,
    Montserrat_400Regular,
@@ -14,7 +11,8 @@ import { Provider } from "react-redux"
 import { createStore, applyMiddleware } from "redux"
 import thunk from "redux-thunk"
 import rootReducer from "./redux/reducers/rootReducer"
-
+import { NavigationContainer } from "@react-navigation/native"
+import DrawerNav from "./navigation/DrawerNav"
 const myStore = createStore(rootReducer, applyMiddleware(thunk))
 
 const App = () => {
@@ -29,12 +27,10 @@ const App = () => {
    } else {
       return (
          <Provider store={myStore}>
-            <View>
+            <NavigationContainer>
                <StatusBar backgroundColor="#000" barStyle="white" />
-               {/* <Home /> */}
-               {/* <Cities /> */}
-               <SignUp />
-            </View>
+               <DrawerNav />
+            </NavigationContainer>
          </Provider>
       )
    }
