@@ -1,4 +1,6 @@
-const usersReducer = (
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
+const usersReducer = async (
    state = {
       token: null,
       firstname: null,
@@ -10,10 +12,10 @@ const usersReducer = (
 ) => {
    switch (action.type) {
       case "ACTION_USER":
-         localStorage.setItem("token", action.payload.token)
-         localStorage.setItem("firstname", action.payload.firstname)
-         localStorage.setItem("picture", action.payload.picture)
-         localStorage.setItem("email", action.payload.email)
+         await AsyncStorage.setItem("token", action.payload.token)
+         await AsyncStorage.setItem("firstname", action.payload.firstname)
+         await AsyncStorage.setItem("picture", action.payload.picture)
+         await AsyncStorage.setItem("email", action.payload.email)
 
          return {
             token: action.payload.token,
@@ -23,7 +25,7 @@ const usersReducer = (
             id: action.payload.id,
          }
       case "LOG_OUT":
-         localStorage.clear()
+         await AsyncStorage.clear()
          return {
             token: null,
             firstname: null,

@@ -3,11 +3,11 @@ import { ScrollView } from "react-native"
 import CitiesData from "../components/CitiesData"
 import HeroCities from "../components/HeroCities"
 
-const Cities = () => {
+const Cities = (props) => {
    return (
       <ScrollView>
          <HeroCities />
-         <CitiesData />
+         <CitiesData navigation={props.navigation} />
       </ScrollView>
    )
 }

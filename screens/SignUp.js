@@ -11,8 +11,12 @@ import {
 } from "react-native"
 import { Icon } from "react-native-elements"
 import SelectPicker from "react-native-form-select-picker"
+import { connect } from "react-redux"
+import usersActions from "../redux/actions/usersActions"
+import Toast, { ErrorToast } from "react-native-toast-message"
 
-const SignUp = () => {
+const SignUp = (props) => {
+   console.log(props)
    const countries = [
       { id: 1, name: "Argentina" },
       { id: 2, name: "Brazil" },
@@ -45,6 +49,54 @@ const SignUp = () => {
          ...newUser,
          [campo]: e,
       })
+   }
+
+   const postUser = (newUser) => {
+      props
+         .postUser(newUser)
+         .then((res) => {
+            if (res.success) {
+               Toast.show({
+                  text1: "Account created successfully",
+                  type: "success",
+                  position: "bottom",
+                  bottomOffset: 40,
+               })
+               props.navigation.navigate("Home")
+            } else if (res.errors) {
+               res.errors.map((error) => {
+                  return Toast.show({
+                     text1: error.message,
+                     type: "error",
+                     position: "bottom",
+                     bottomOffset: 40,
+                  })
+               })
+            } else {
+               Toast.show({
+                  text1: "There is already an account with this email",
+                  type: "error",
+                  position: "bottom",
+                  bottomOffset: 40,
+               })
+            }
+         })
+         .catch((err) => {
+            console.log(err)
+         })
+   }
+
+   const submitForm = () => {
+      if (Object.values(newUser).some((value) => value === "")) {
+         Toast.show({
+            text1: "All the fields are required",
+            type: "error",
+            position: "bottom",
+            bottomOffset: 40,
+         })
+      } else {
+         postUser(newUser)
+      }
    }
 
    return (
@@ -143,7 +195,7 @@ const SignUp = () => {
                      <SelectPicker
                         style={styles.inputText}
                         default="Choose your country:"
-                        onChangeText={(e) => inputHandler(e, "country")}
+                        onValueChange={(e) => inputHandler(e, "country")}
                         placeholderStyle={{
                            color: "white",
                            fontFamily: "Montserrat_400Regular",
@@ -189,7 +241,7 @@ const SignUp = () => {
                   </View>
                </View>
                <TouchableOpacity
-                  // onPress={submitForm}
+                  onPress={submitForm}
                   style={styles.button}
                   activeOpacity={0.7}
                >
@@ -207,8 +259,6 @@ const SignUp = () => {
    )
 }
 
-export default SignUp
-
 const styles = StyleSheet.create({
    container: {
       height: 1000,
@@ -224,7 +274,6 @@ const styles = StyleSheet.create({
       fontSize: 55,
       fontFamily: "Montserrat_700Bold",
       textAlign: "center",
-      marginTop: 20,
       left: 4,
    },
    titleShadow: {
@@ -294,3 +343,9 @@ const styles = StyleSheet.create({
       textDecorationLine: "underline",
    },
 })
+
+const mapDispatchToProps = {
+   postUser: usersActions.postUser,
+}
+
+export default connect(null, mapDispatchToProps)(SignUp)

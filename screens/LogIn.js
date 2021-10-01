@@ -9,18 +9,60 @@ import {
    View,
 } from "react-native"
 import { Icon } from "react-native-elements"
+import { connect } from "react-redux"
+import usersActions from "../redux/actions/usersActions"
+import Toast from "react-native-toast-message"
 
-const LogIn = () => {
-   const [userLogged, setUserLogged] = useState({
+const LogIn = (props) => {
+   const [login, setLogin] = useState({
       email: "",
       password: "",
    })
 
    const inputHandler = (e, campo) => {
-      setUserLogged({
-         ...userLogged,
+      setLogin({
+         ...login,
          [campo]: e,
       })
+   }
+
+   const logIn = (login) => {
+      props
+         .logIn(login)
+         .then((res) => {
+            if (res.success) {
+               Toast.show({
+                  text1: "Welcome to MYtinerary",
+                  type: "success",
+                  position: "top",
+                  topOffset: 65,
+               })
+               props.navigation.navigate("Home")
+            } else {
+               Toast.show({
+                  text1: "Username and/or password incorrect",
+                  type: "error",
+                  position: "top",
+                  topOffset: 65,
+               })
+            }
+         })
+         .catch((err) => {
+            console.log(err)
+         })
+   }
+
+   const submitForm = () => {
+      if (login.email === "" || login.password === "") {
+         Toast.show({
+            text1: "All the fields are required",
+            type: "error",
+            position: "top",
+            topOffset: 65,
+         })
+      } else {
+         logIn(login)
+      }
    }
 
    return (
@@ -42,7 +84,7 @@ const LogIn = () => {
                      />
                      <TextInput
                         style={styles.inputText}
-                        value={userLogged.email}
+                        value={login.email}
                         placeholder="Email"
                         placeholderTextColor="white"
                         onChangeText={(e) => inputHandler(e, "email")}
@@ -57,7 +99,7 @@ const LogIn = () => {
                      />
                      <TextInput
                         style={styles.inputText}
-                        value={userLogged.password}
+                        value={login.password}
                         placeholder="Password"
                         placeholderTextColor="white"
                         secureTextEntry={true}
@@ -66,7 +108,7 @@ const LogIn = () => {
                   </View>
                </View>
                <TouchableOpacity
-                  // onPress={submitForm}
+                  onPress={submitForm}
                   style={styles.button}
                   activeOpacity={0.7}
                >
@@ -83,8 +125,6 @@ const LogIn = () => {
       </TouchableWithoutFeedback>
    )
 }
-
-export default LogIn
 
 const styles = StyleSheet.create({
    container: {
@@ -160,3 +200,9 @@ const styles = StyleSheet.create({
       textDecorationLine: "underline",
    },
 })
+
+const mapDispatchToProps = {
+   logIn: usersActions.logIn,
+}
+
+export default connect(null, mapDispatchToProps)(LogIn)

@@ -1,58 +1,111 @@
 import React from "react"
 import { createDrawerNavigator } from "@react-navigation/drawer"
-import Cities from "../screens/Cities"
-import Contact from "../screens/Contact"
-import Home from "../screens/Home"
-import Itineraries from "../screens/Itineraries"
-import LogIn from "../screens/LogIn"
-import SignUp from "../screens/SignUp"
 const Drawer = createDrawerNavigator()
-import StackNav from "./StackNav"
+import StackNav, {
+   StackNavCities,
+   StackNavContact,
+   StackNavLogIn,
+   StackNavSignUp,
+} from "./StackNav"
+import { Icon } from "react-native-elements"
 
 const DrawerNav = () => {
    return (
-      <Drawer.Navigator>
+      <Drawer.Navigator
+         screenOptions={{
+            drawerContentStyle: {
+               backgroundColor: "#6016AC",
+            },
+            drawerLabelStyle: {
+               fontSize: 26,
+               fontFamily: "Montserrat_500Medium",
+            },
+            drawerInactiveBackgroundColor: "white",
+            drawerActiveTintColor: "white",
+            drawerInactiveTintColor: "black",
+            drawerActiveBackgroundColor: "#f43ad5",
+            headerRight: () => <LogoTitle />,
+         }}
+      >
          <Drawer.Screen
-            name="home"
+            name="Home"
             component={StackNav}
             options={{
-               title: "MYtinerary",
+               title: "Home",
                headerShown: false,
+               drawerIcon: () => (
+                  <Icon
+                     name="home"
+                     type="font-awesome-5"
+                     color="black"
+                     style={{ paddingLeft: 30 }}
+                  />
+               ),
             }}
          />
          <Drawer.Screen
-            name="cities"
-            component={Cities}
+            name="Cities"
+            component={StackNavCities}
             options={{
                title: "Cities",
+               headerShown: false,
+               drawerIcon: () => (
+                  <Icon
+                     name="globe-americas"
+                     type="font-awesome-5"
+                     color="black"
+                     style={{ paddingLeft: 30 }}
+                  />
+               ),
             }}
          />
          <Drawer.Screen
-            name="itineraries"
-            component={Itineraries}
-            options={{
-               title: "Itineraries",
-            }}
-         />
-         <Drawer.Screen
-            name="signUp"
-            component={SignUp}
+            name="SignUp"
+            component={StackNavSignUp}
             options={{
                title: "Sign Up",
+               headerShown: false,
+               drawerIcon: () => (
+                  <Icon
+                     name="file-signature"
+                     type="font-awesome-5"
+                     color="black"
+                     style={{ paddingLeft: 30 }}
+                  />
+               ),
             }}
          />
          <Drawer.Screen
-            name="logIn"
-            component={LogIn}
+            name="LogIn"
+            component={StackNavLogIn}
             options={{
                title: "Log In",
+               headerShown: false,
+               drawerIcon: () => (
+                  <Icon
+                     // sign-out-alt para log out
+                     name="sign-in-alt"
+                     type="font-awesome-5"
+                     color="black"
+                     style={{ paddingLeft: 30 }}
+                  />
+               ),
             }}
          />
          <Drawer.Screen
-            name="contact"
-            component={Contact}
+            name="Contact"
+            component={StackNavContact}
             options={{
                title: "Contact",
+               headerShown: false,
+               drawerIcon: () => (
+                  <Icon
+                     name="mail-bulk"
+                     type="font-awesome-5"
+                     color="black"
+                     style={{ paddingLeft: 30 }}
+                  />
+               ),
             }}
          />
       </Drawer.Navigator>

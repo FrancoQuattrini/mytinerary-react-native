@@ -7,10 +7,38 @@ import CardCity from "./CardCity"
 
 const CitiesData = (props) => {
    const [search, setSearch] = useState("")
+   const [loading, setLoading] = useState(true)
 
    useEffect(() => {
-      props.getCities()
+      props
+         .getCities()
+         .then((res) => {
+            if (res.success) {
+               setLoading(false)
+            } else {
+               props.navigation.navigate("home")
+            }
+         })
+         .catch((err) => {
+            console.log(err)
+            props.navigation.navigate("home")
+         })
    }, [])
+
+   if (loading) {
+      return (
+         <View style={styles.containerSorry}>
+            <Text style={styles.textSorry}>Loading</Text>
+            <Image
+               source={{
+                  uri: "https://i.postimg.cc/Kj7fzXm2/Ripple-1s-200px.gif",
+               }}
+               style={styles.notFound}
+            />
+            <Text style={styles.textSorry}>Please wait...</Text>
+         </View>
+      )
+   }
 
    const inputSearch = (e) => {
       props.filterCities(e)
@@ -44,7 +72,13 @@ const CitiesData = (props) => {
             ) : (
                <View>
                   {props.citiesSearch.map((city) => {
-                     return <CardCity city={city} key={city.name} />
+                     return (
+                        <CardCity
+                           navigation={props.navigation}
+                           city={city}
+                           key={city.name}
+                        />
+                     )
                   })}
                </View>
             )}

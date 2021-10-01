@@ -10,7 +10,7 @@ const CalltoAction = (props) => {
          <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-               props.navigation.navigate("cities")
+               props.navigation.navigate("Cities")
             }}
          >
             <View style={styles.button}>

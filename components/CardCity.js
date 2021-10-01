@@ -10,14 +10,18 @@ import {
 const CardCity = (props) => {
    const { _id, name, country, img, description } = props.city
    return (
-      <View style={styles.containerCard}>
-         <ImageBackground source={{ uri: img }} style={styles.img}>
-            <Text style={styles.name}>{name}</Text>
-            <Text style={styles.nameShadow}>{name}</Text>
-            <Text style={styles.country}>{country}</Text>
-            <Text style={styles.countryShadow}>{country}</Text>
-         </ImageBackground>
-      </View>
+      <Pressable
+         onPress={() => props.navigation.navigate("itineraries", { id: _id })}
+      >
+         <View style={styles.containerCard}>
+            <ImageBackground source={{ uri: img }} style={styles.img}>
+               <Text style={styles.name}>{name}</Text>
+               <Text style={styles.nameShadow}>{name}</Text>
+               <Text style={styles.country}>{country}</Text>
+               <Text style={styles.countryShadow}>{country}</Text>
+            </ImageBackground>
+         </View>
+      </Pressable>
    )
 }
 
