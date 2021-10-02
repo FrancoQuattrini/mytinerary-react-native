@@ -7,6 +7,7 @@ const usersReducer = async (
       picture: null,
       email: null,
       id: null,
+      status: null,
    },
    action
 ) => {
@@ -23,6 +24,7 @@ const usersReducer = async (
             picture: action.payload.picture,
             email: action.payload.email,
             id: action.payload.id,
+            status: action.payload,
          }
       case "LOG_OUT":
          await AsyncStorage.clear()

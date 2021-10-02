@@ -13,10 +13,9 @@ import { Icon } from "react-native-elements"
 import SelectPicker from "react-native-form-select-picker"
 import { connect } from "react-redux"
 import usersActions from "../redux/actions/usersActions"
-import Toast, { ErrorToast } from "react-native-toast-message"
+import { useToast } from "react-native-toast-notifications"
 
 const SignUp = (props) => {
-   console.log(props)
    const countries = [
       { id: 1, name: "Argentina" },
       { id: 2, name: "Brazil" },
@@ -51,33 +50,38 @@ const SignUp = (props) => {
       })
    }
 
+   const toast = useToast()
+
    const postUser = (newUser) => {
       props
          .postUser(newUser)
          .then((res) => {
             if (res.success) {
-               Toast.show({
-                  text1: "Account created successfully",
+               toast.show("Account created successfully", {
                   type: "success",
-                  position: "bottom",
-                  bottomOffset: 40,
+                  placement: "top",
+                  duration: 3000,
+                  offset: 30,
+                  animationType: "slide-in",
                })
                props.navigation.navigate("Home")
             } else if (res.errors) {
                res.errors.map((error) => {
-                  return Toast.show({
-                     text1: error.message,
-                     type: "error",
-                     position: "bottom",
-                     bottomOffset: 40,
+                  return toast.show(error.message, {
+                     type: "danger",
+                     placement: "top",
+                     duration: 3000,
+                     offset: 30,
+                     animationType: "slide-in",
                   })
                })
             } else {
-               Toast.show({
-                  text1: "There is already an account with this email",
-                  type: "error",
-                  position: "bottom",
-                  bottomOffset: 40,
+               toast.show("There is already an account with this email", {
+                  type: "danger",
+                  placement: "top",
+                  duration: 3000,
+                  offset: 30,
+                  animationType: "slide-in",
                })
             }
          })
@@ -88,11 +92,12 @@ const SignUp = (props) => {
 
    const submitForm = () => {
       if (Object.values(newUser).some((value) => value === "")) {
-         Toast.show({
-            text1: "All the fields are required",
-            type: "error",
-            position: "bottom",
-            bottomOffset: 40,
+         toast.show("All the fields are required", {
+            type: "warning",
+            placement: "top",
+            duration: 3000,
+            offset: 30,
+            animationType: "slide-in",
          })
       } else {
          postUser(newUser)

@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import {
    ImageBackground,
+   Keyboard,
    StyleSheet,
    Text,
    TextInput,
@@ -11,7 +12,7 @@ import {
 import { Icon } from "react-native-elements"
 import { connect } from "react-redux"
 import usersActions from "../redux/actions/usersActions"
-import Toast from "react-native-toast-message"
+import { useToast } from "react-native-toast-notifications"
 
 const LogIn = (props) => {
    const [login, setLogin] = useState({
@@ -26,24 +27,28 @@ const LogIn = (props) => {
       })
    }
 
+   const toast = useToast()
+
    const logIn = (login) => {
       props
          .logIn(login)
          .then((res) => {
             if (res.success) {
-               Toast.show({
-                  text1: "Welcome to MYtinerary",
+               toast.show("Welcome to MYtinerary", {
                   type: "success",
-                  position: "top",
-                  topOffset: 65,
+                  placement: "top",
+                  duration: 3000,
+                  offset: 30,
+                  animationType: "slide-in",
                })
                props.navigation.navigate("Home")
             } else {
-               Toast.show({
-                  text1: "Username and/or password incorrect",
-                  type: "error",
-                  position: "top",
-                  topOffset: 65,
+               toast.show("Username and/or password incorrect", {
+                  type: "danger",
+                  placement: "top",
+                  duration: 3000,
+                  offset: 30,
+                  animationType: "slide-in",
                })
             }
          })
@@ -54,11 +59,12 @@ const LogIn = (props) => {
 
    const submitForm = () => {
       if (login.email === "" || login.password === "") {
-         Toast.show({
-            text1: "All the fields are required",
-            type: "error",
-            position: "top",
-            topOffset: 65,
+         toast.show("All the fields are required", {
+            type: "warning",
+            placement: "top",
+            duration: 3000,
+            offset: 30,
+            animationType: "slide-in",
          })
       } else {
          logIn(login)
