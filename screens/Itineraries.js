@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import { connect } from "react-redux"
 import HeroItineraries from "../components/HeroItineraries"
+import Itinerary from "../components/Itinerary"
 import citiesActions from "../redux/actions/citiesActions"
 import itinerariesActions from "../redux/actions/itinerariesActions"
 
@@ -14,7 +15,7 @@ const Itineraries = (props) => {
 
    useEffect(() => {
       if (!getCity) {
-         props.navigation.navigate("cities")
+         props.navigation.navigate("Cities")
          return false
       }
       props
@@ -23,13 +24,13 @@ const Itineraries = (props) => {
             if (res.success) {
                setLoading(false)
             } else {
-               props.navigation.navigate("home")
+               props.navigation.navigate("Home")
                return false
             }
          })
          .catch((err) => {
             console.log(err)
-            props.navigation.navigate("home")
+            props.navigation.navigate("Home")
          })
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
@@ -52,6 +53,32 @@ const Itineraries = (props) => {
    return (
       <ScrollView>
          <HeroItineraries getCity={getCity} history={props.navigation} />
+         <View style={styles.containerItineraries}>
+            {props.itineraries.length === 0 ? (
+               <View>
+                  <Text style={styles.textSorry}>
+                     It seems there are no itineraries yet!
+                  </Text>
+                  <Image
+                     source={{
+                        uri: "https://i.postimg.cc/Y9pdss8s/astronaut.gif",
+                     }}
+                     style={styles.notFound}
+                  />
+               </View>
+            ) : (
+               props.itineraries.map((data) => {
+                  return (
+                     <View
+                        key={data.nameUser}
+                        style={{ backgroundColor: "#b4b3b3" }}
+                     >
+                        <Itinerary data={data} navigation={props.navigation} />
+                     </View>
+                  )
+               })
+            )}
+         </View>
       </ScrollView>
    )
 }

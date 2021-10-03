@@ -121,7 +121,10 @@ const LogIn = (props) => {
                   <Text style={styles.textButton}>Log In</Text>
                </TouchableOpacity>
                <Text style={styles.already}>Don't have an account?</Text>
-               <TouchableOpacity // onPress={submitForm}
+               <TouchableOpacity
+                  onPress={() => {
+                     props.navigation.navigate("SignUp")
+                  }}
                   activeOpacity={0.7}
                >
                   <Text style={styles.login}>Sign Up here!</Text>

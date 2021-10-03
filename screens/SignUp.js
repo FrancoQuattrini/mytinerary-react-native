@@ -253,7 +253,10 @@ const SignUp = (props) => {
                   <Text style={styles.textButton}>Sign Up</Text>
                </TouchableOpacity>
                <Text style={styles.already}>Already have an account?</Text>
-               <TouchableOpacity // onPress={submitForm}
+               <TouchableOpacity
+                  onPress={() => {
+                     props.navigation.navigate("LogIn")
+                  }}
                   activeOpacity={0.7}
                >
                   <Text style={styles.login}>Log In here!</Text>

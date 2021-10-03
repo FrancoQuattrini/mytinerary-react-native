@@ -13,38 +13,32 @@ import StackNav, {
    StackNavLogIn,
    StackNavSignUp,
 } from "./StackNav"
-import { Icon, withTheme } from "react-native-elements"
+import { Icon } from "react-native-elements"
 import { connect } from "react-redux"
 import usersActions from "../redux/actions/usersActions"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 
 const DrawerNav = (props) => {
-   console.log(props)
-   const [token, setToken] = useState(null)
-   const [firstname, setFirstname] = useState(null)
-   const [picture, setPicture] = useState(null)
+   const { token, firstname, picture } = props
+   console.log(props.navigation)
    useEffect(() => {
       storage()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
    const storage = async () => {
-      const token = await AsyncStorage.getItem("token")
-      setToken(token)
-      const firstname = await AsyncStorage.getItem("firstname")
-      const picture = await AsyncStorage.getItem("picture")
-      setFirstname(firstname)
-      setPicture(picture)
+      if (await AsyncStorage.getItem("token")) {
+         const token = await AsyncStorage.getItem("token")
+         const firstname = await AsyncStorage.getItem("firstname")
+         const picture = await AsyncStorage.getItem("picture")
+         props.logInLS(token)
+      }
    }
 
    const cleanStorage = async () => {
-      setToken(null)
-      setFirstname(null)
-      setPicture(null)
       await props.logOut()
    }
-
-   console.log(token)
 
    const DrawerInfo = (props) => {
       return (
@@ -55,7 +49,7 @@ const DrawerNav = (props) => {
             <View
                style={{
                   width: "100%",
-                  height: 200,
+                  height: 220,
                   justifyContent: "center",
                   alignItems: "center",
                }}
@@ -79,8 +73,11 @@ const DrawerNav = (props) => {
                   style={{
                      fontSize: 30,
                      color: "white",
-                     paddingTop: 5,
+                     marginTop: 10,
+                     paddingVertical: 3,
+                     paddingHorizontal: 15,
                      fontFamily: "Montserrat_500Medium",
+                     borderRadius: 100,
                   }}
                >
                   {token && `👋 Hi ${firstname}!`}
@@ -92,6 +89,7 @@ const DrawerNav = (props) => {
                   activeOpacity={0.7}
                   onPress={() => {
                      cleanStorage()
+                     props.navigation.navigate("Home")
                   }}
                >
                   <View
@@ -106,10 +104,17 @@ const DrawerNav = (props) => {
                         flexDirection: "row",
                      }}
                   >
+                     <Icon
+                        name="sign-out-alt"
+                        type="font-awesome-5"
+                        color="black"
+                        style={{ paddingRight: 30 }}
+                     />
                      <Text
                         style={{
                            fontSize: 25,
                            fontFamily: "Montserrat_500Medium",
+                           paddingRight: 20,
                         }}
                      >
                         Log Out
@@ -151,7 +156,7 @@ const DrawerNav = (props) => {
                      name="home"
                      type="font-awesome-5"
                      color="black"
-                     style={{ paddingLeft: 30 }}
+                     style={{ paddingLeft: 28 }}
                   />
                ),
             }}
@@ -198,7 +203,6 @@ const DrawerNav = (props) => {
                      headerShown: false,
                      drawerIcon: () => (
                         <Icon
-                           // sign-out-alt para log out
                            name="sign-in-alt"
                            type="font-awesome-5"
                            color="black"
@@ -221,7 +225,7 @@ const DrawerNav = (props) => {
                      name="mail-bulk"
                      type="font-awesome-5"
                      color="black"
-                     style={{ paddingLeft: 30 }}
+                     style={{ paddingLeft: 28 }}
                   />
                ),
             }}
@@ -235,11 +239,11 @@ const mapStateToProps = (state) => {
       token: state.users.token,
       firstname: state.users.firstname,
       picture: state.users.picture,
-      status: state.users.status,
    }
 }
 
 const mapDispatchToProps = {
+   logInLS: usersActions.logInLS,
    logOut: usersActions.logOut,
 }
 

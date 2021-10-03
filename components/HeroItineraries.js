@@ -3,7 +3,7 @@ import { Image, ImageBackground, StyleSheet, Text, View } from "react-native"
 
 const HeroItineraries = (props) => {
    if (!props.getCity) {
-      props.navigation.navigate("cities")
+      props.navigation.navigate("Cities")
       return false
    }
    const {
@@ -16,7 +16,7 @@ const HeroItineraries = (props) => {
       estimated_population,
    } = props.getCity
    return (
-      <View>
+      <View style={{ marginBottom: 20 }}>
          <ImageBackground source={{ uri: img2 }} style={styles.image}>
             <Text style={styles.name}>{name}</Text>
             <Text style={styles.nameShadow}>{name}</Text>
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
+      marginBottom: 20,
    },
    dos: {
       width: "50%",
