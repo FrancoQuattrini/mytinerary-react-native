@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react"
-import { Image, StyleSheet, Text, TextInput, View } from "react-native"
+import {
+   Alert,
+   Image,
+   ScrollView,
+   StyleSheet,
+   Text,
+   TextInput,
+   View,
+} from "react-native"
 import { Icon } from "react-native-elements"
 import { connect } from "react-redux"
 
@@ -23,19 +31,14 @@ const Comment = (props) => {
    }
 
    const confirmationDelete = () => {
-      //   Swal.fire({
-      //      title: "Do you want to delete this comment?",
-      //      showDenyButton: true,
-      //      confirmButtonText: `Delete`,
-      //      denyButtonText: `Back`,
-      //   }).then((result) => {
-      //      if (result.isConfirmed) {
-      //         Swal.fire("Comment deleted!", "", "success").then(
-      //            deleteComment(_id)
-      //         )
-      //      }
-      //   })
-      deleteComment(_id)
+      Alert.alert("Confirmation", "Do you want to delete this comment?", [
+         {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+         },
+         { text: "Delete", onPress: () => deleteComment(_id) },
+      ])
    }
 
    const actionModify = () => {
@@ -109,7 +112,7 @@ const Comment = (props) => {
                         name="times-circle"
                         type="font-awesome"
                         color="#ac00a3"
-                        size={35}
+                        size={40}
                         iconStyle={{ paddingTop: 20 }}
                         onPress={() => setEditComment(!editComment)}
                      />

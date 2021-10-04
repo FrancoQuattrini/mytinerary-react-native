@@ -8,8 +8,8 @@ import {
 } from "@react-navigation/drawer"
 const Drawer = createDrawerNavigator()
 import StackNav, {
+   StackNavAboutUs,
    StackNavCities,
-   StackNavContact,
    StackNavLogIn,
    StackNavSignUp,
 } from "./StackNav"
@@ -17,11 +17,16 @@ import { Icon } from "react-native-elements"
 import { connect } from "react-redux"
 import usersActions from "../redux/actions/usersActions"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { Image, Text, TouchableOpacity, View } from "react-native"
+import {
+   Image,
+   ImageBackground,
+   Text,
+   TouchableOpacity,
+   View,
+} from "react-native"
 
 const DrawerNav = (props) => {
    const { token, firstname, picture } = props
-   console.log(props.navigation)
    useEffect(() => {
       storage()
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,87 +47,91 @@ const DrawerNav = (props) => {
 
    const DrawerInfo = (props) => {
       return (
-         <DrawerContentScrollView
-            style={{ backgroundColor: "#591481" }}
-            {...props}
+         <ImageBackground
+            style={{ width: "100%", height: 1000 }}
+            source={{
+               uri: "https://i.postimg.cc/BvJc1kP6/back-Drawer.jpg",
+            }}
          >
-            <View
-               style={{
-                  width: "100%",
-                  height: 220,
-                  justifyContent: "center",
-                  alignItems: "center",
-               }}
-            >
-               {token ? (
-                  <Image
-                     style={{ width: "50%", height: 140, borderRadius: 100 }}
-                     source={{
-                        uri: picture,
-                     }}
-                  />
-               ) : (
-                  <Image
-                     style={{ width: "50%", height: 140 }}
-                     source={{
-                        uri: "https://i.postimg.cc/C56yrT9j/iconuser.png",
-                     }}
-                  />
-               )}
-               <Text
+            <DrawerContentScrollView {...props}>
+               <View
                   style={{
-                     fontSize: 30,
-                     color: "white",
-                     marginTop: 10,
-                     paddingVertical: 3,
-                     paddingHorizontal: 15,
-                     fontFamily: "Montserrat_500Medium",
-                     borderRadius: 100,
+                     width: "100%",
+                     height: 220,
+                     justifyContent: "center",
+                     alignItems: "center",
                   }}
                >
-                  {token && `👋 Hi ${firstname}!`}
-               </Text>
-            </View>
-            <DrawerItemList {...props} />
-            {token && (
-               <TouchableOpacity
-                  activeOpacity={0.7}
-                  onPress={() => {
-                     cleanStorage()
-                     props.navigation.navigate("Home")
-                  }}
-               >
-                  <View
+                  {token ? (
+                     <Image
+                        style={{ width: "50%", height: 140, borderRadius: 100 }}
+                        source={{
+                           uri: picture,
+                        }}
+                     />
+                  ) : (
+                     <Image
+                        style={{ width: "50%", height: 140 }}
+                        source={{
+                           uri: "https://i.postimg.cc/C56yrT9j/iconuser.png",
+                        }}
+                     />
+                  )}
+                  <Text
                      style={{
-                        backgroundColor: "white",
-                        marginHorizontal: 10,
-                        marginVertical: 5,
-                        borderRadius: 4,
-                        height: 57,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "row",
+                        fontSize: 30,
+                        color: "white",
+                        marginTop: 10,
+                        paddingVertical: 3,
+                        paddingHorizontal: 15,
+                        fontFamily: "Montserrat_500Medium",
+                        borderRadius: 100,
                      }}
                   >
-                     <Icon
-                        name="sign-out-alt"
-                        type="font-awesome-5"
-                        color="black"
-                        style={{ paddingRight: 30 }}
-                     />
-                     <Text
+                     {token && `👋 Hi ${firstname}!`}
+                  </Text>
+               </View>
+               <DrawerItemList {...props} />
+               {token && (
+                  <TouchableOpacity
+                     activeOpacity={0.7}
+                     onPress={() => {
+                        cleanStorage()
+                        props.navigation.navigate("Home")
+                     }}
+                  >
+                     <View
                         style={{
-                           fontSize: 25,
-                           fontFamily: "Montserrat_500Medium",
-                           paddingRight: 20,
+                           backgroundColor: "white",
+                           marginHorizontal: 10,
+                           marginVertical: 5,
+                           borderRadius: 4,
+                           height: 57,
+                           justifyContent: "center",
+                           alignItems: "center",
+                           flexDirection: "row",
                         }}
                      >
-                        Log Out
-                     </Text>
-                  </View>
-               </TouchableOpacity>
-            )}
-         </DrawerContentScrollView>
+                        <Icon
+                           name="sign-out-alt"
+                           type="font-awesome-5"
+                           color="black"
+                           style={{ paddingRight: 30 }}
+                        />
+                        <Text
+                           style={{
+                              fontSize: 25,
+                              fontFamily: "Montserrat_500Medium",
+                              paddingRight: 20,
+                           }}
+                        >
+                           Log Out
+                        </Text>
+                     </View>
+                  </TouchableOpacity>
+               )}
+            </DrawerContentScrollView>
+         </ImageBackground>
       )
    }
 
@@ -215,10 +224,10 @@ const DrawerNav = (props) => {
          )}
 
          <Drawer.Screen
-            name="Contact"
-            component={StackNavContact}
+            name="AboutUs"
+            component={StackNavAboutUs}
             options={{
-               title: "Contact",
+               title: "About Us",
                headerShown: false,
                drawerIcon: () => (
                   <Icon

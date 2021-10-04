@@ -76,7 +76,7 @@ const Itinerary = (props) => {
       <View
          style={{
             height: "auto",
-            marginTop: 50,
+            marginVertical: 50,
             width: "100%",
             alignItems: "center",
          }}

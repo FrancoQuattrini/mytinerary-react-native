@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import { connect } from "react-redux"
+import Footer from "../components/Footer"
 import HeroItineraries from "../components/HeroItineraries"
 import Itinerary from "../components/Itinerary"
 import citiesActions from "../redux/actions/citiesActions"
@@ -55,7 +56,13 @@ const Itineraries = (props) => {
          <HeroItineraries getCity={getCity} history={props.navigation} />
          <View style={styles.containerItineraries}>
             {props.itineraries.length === 0 ? (
-               <View>
+               <View
+                  style={{
+                     backgroundColor: "white",
+                     alignItems: "center",
+                     padding: 20,
+                  }}
+               >
                   <Text style={styles.textSorry}>
                      It seems there are no itineraries yet!
                   </Text>
@@ -79,14 +86,15 @@ const Itineraries = (props) => {
                })
             )}
          </View>
+         <Footer navigation={props.navigation} />
       </ScrollView>
    )
 }
 
 const styles = StyleSheet.create({
    notFound: {
-      width: "100%",
-      height: 400,
+      width: "80%",
+      height: 350,
    },
    containerSorry: {
       alignItems: "center",
@@ -98,7 +106,7 @@ const styles = StyleSheet.create({
    },
    textSorry: {
       color: "#f54cde",
-      fontSize: 30,
+      fontSize: 35,
       fontFamily: "Montserrat_700Bold",
       textAlign: "center",
       padding: 10,

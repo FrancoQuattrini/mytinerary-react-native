@@ -1,7 +1,7 @@
 import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import Cities from "../screens/Cities"
-import Contact from "../screens/Contact"
+import Contact from "../screens/AboutUs"
 import Home from "../screens/Home"
 import Itineraries from "../screens/Itineraries"
 import LogIn from "../screens/LogIn"
@@ -204,7 +204,7 @@ export const StackNavLogIn = (props) => {
    )
 }
 
-export const StackNavContact = (props) => {
+export const StackNavAboutUs = (props) => {
    const LogoTitle = () => {
       return (
          <Icon
@@ -243,10 +243,10 @@ export const StackNavContact = (props) => {
          }}
       >
          <Stack.Screen
-            name="contact"
+            name="aboutUs"
             component={Contact}
             options={{
-               title: "Contact",
+               title: "About Us",
                headerLeft: () => <LogoBack />,
             }}
          />
