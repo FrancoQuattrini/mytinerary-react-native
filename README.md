@@ -1,6 +1,6 @@
 <div align="center">
 
-# MyTinerary Mobile App ✈️
+# MyTinerary Mobile App 📱
 
 <img  height="300px" src="https://i.postimg.cc/zf9whvKV/MYtinerary-Native.jpg" ></img>
 <img  height="300px" src="https://i.postimg.cc/qqG2WGY3/MYtinerary-Native2.jpg" ></img>
